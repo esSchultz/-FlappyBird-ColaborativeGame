@@ -59,6 +59,28 @@ def draw_pipe(pipe_x, pipe_width, pipe_space_y, pipe_space_height):
 
     screen.draw.filled_rect(Rect((pipe_x, pipe_space_y + pipe_space_height), (pipe_width, pipe_space_y_2)),color=(94, 201, 72))
 
+def update(dt):
+    global pipe_x, pipe_space_y, pipe_x2, pipe2_space_y, pipe_width
+    
+    #TUBO
+    if pipe_x > -30:
+        pipe_x -= int(165 * dt)
+    else:
+        pipe_x = playing_area_width - pipe_width + 300
+        pipe_space_y = random.randint(50, 250)
+
+    if pipe_x2 > -30:
+        pipe_x2 -= int(165 * dt)
+    else:
+        pipe_x2 = playing_area_width - pipe_width + 300
+        pipe2_space_y = random.randint(50, 250)
+
+
+def draw_pipe(pipe_x, pipe_width, pipe_space_y, pipe_space_height):
+    screen.draw.filled_rect(Rect((pipe_x, 0), (pipe_width, pipe_space_y)), color=(94, 201, 72))
+
+    screen.draw.filled_rect(Rect((pipe_x, pipe_space_y + pipe_space_height), (pipe_width, pipe_space_y_2)),color=(94, 201, 72))
 
 WIDTH = playing_area_width
 HEIGHT = playing_area_height
+
