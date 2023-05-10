@@ -30,6 +30,9 @@ rato_x_1 = 60
 rato_x_2 = 200
 rato_y_speed = 0
 
+game_over = False
+color = (35, 92, 118)
+
 def draw():
     screen.fill((0, 0, 0))
 
@@ -46,6 +49,10 @@ def draw():
 
     draw_pipe(pipe_x, pipe_width, pipe_space_y, pipe_space_height)
     draw_pipe(pipe_x2, pipe_width, pipe2_space_y, pipe_space_height)
+    
+    if game_over is True:
+        screen.draw.filled_rect(Rect((0, 0), (playing_area_width, playing_area_height)), color=(0, 0, 0))
+        screen.draw.text('YOU LOSE!', (155, 175))
 
 
 def draw_pipe(pipe_x, pipe_width, pipe_space_y, pipe_space_height):
@@ -62,6 +69,7 @@ def update(dt):
     global pipe_x, pipe_space_y, pipe_x2, pipe2_space_y, pipe_width
     global cloud_x_1, cloud_x_2, cloud_x_3
     global rato_y_speed, rato_x_2
+    global game_over
     
     rato_y_speed += 400 * dt
     rato_x_2 += rato_y_speed * dt
@@ -89,6 +97,17 @@ def update(dt):
         cloud_x_2 -= 50 * dt
     else:
         cloud_x_2 = 488
+        
+    if rato_x_2 > 430:
+        game_over = True
+    elif rato_x_2 < -30:
+        game_over = True
+    elif pipe_x == rato_x_1:
+        if round(rato_x_2) <= pipe_space_y or round(rato_x_2) >= pipe_space_y + 100:
+            game_over = True
+    elif pipe_x2 == rato_x_1:
+        if round(rato_x_2) <= pipe2_space_y or round(rato_x_2) >= pipe2_space_y + 100:
+            game_over = True
 
 def draw_pipe(pipe_x, pipe_width, pipe_space_y, pipe_space_height):
     screen.draw.filled_rect(Rect((pipe_x, 0), (pipe_width, pipe_space_y)), color=(94, 201, 72))
@@ -97,5 +116,3 @@ def draw_pipe(pipe_x, pipe_width, pipe_space_y, pipe_space_height):
 
 WIDTH = playing_area_width
 HEIGHT = playing_area_height
-
-# Escreva o seu código aqui :-)
