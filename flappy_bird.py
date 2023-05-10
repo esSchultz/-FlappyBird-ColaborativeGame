@@ -5,13 +5,6 @@ nuvem = Actor("nuvem")
 rato = Actor("rato")
 points = 0
 
-# BIRD
-bird_x = 62
-bird_y = 200
-bird_width = 30
-bird_heigth = 25
-bird_y_speed = 0
-
 # TELA
 playing_area_width = 400
 playing_area_height = 400
@@ -35,6 +28,7 @@ cloud_x_2 = 315
 #RATO
 rato_x_1 = 60
 rato_x_2 = 200
+rato_y_speed = 0
 
 def draw():
     screen.fill((0, 0, 0))
@@ -59,8 +53,18 @@ def draw_pipe(pipe_x, pipe_width, pipe_space_y, pipe_space_height):
 
     screen.draw.filled_rect(Rect((pipe_x, pipe_space_y + pipe_space_height), (pipe_width, pipe_space_y_2)),color=(94, 201, 72))
 
+def on_key_down():
+    global rato_y_speed
+    if rato_y_speed > 0:
+        rato_y_speed -= 250
+
 def update(dt):
     global pipe_x, pipe_space_y, pipe_x2, pipe2_space_y, pipe_width
+    global cloud_x_1, cloud_x_2, cloud_x_3
+    global rato_y_speed, rato_x_2
+    
+    rato_y_speed += 400 * dt
+    rato_x_2 += rato_y_speed * dt
     
     #TUBO
     if pipe_x > -30:
@@ -74,7 +78,17 @@ def update(dt):
     else:
         pipe_x2 = playing_area_width - pipe_width + 300
         pipe2_space_y = random.randint(50, 250)
+        
+    # NUVENS
+    if cloud_x_1 > -100:
+        cloud_x_1 -= 40 * dt
+    else:
+        cloud_x_1 = 488
 
+    if cloud_x_2 > -100:
+        cloud_x_2 -= 50 * dt
+    else:
+        cloud_x_2 = 488
 
 def draw_pipe(pipe_x, pipe_width, pipe_space_y, pipe_space_height):
     screen.draw.filled_rect(Rect((pipe_x, 0), (pipe_width, pipe_space_y)), color=(94, 201, 72))
@@ -84,3 +98,4 @@ def draw_pipe(pipe_x, pipe_width, pipe_space_y, pipe_space_height):
 WIDTH = playing_area_width
 HEIGHT = playing_area_height
 
+# Escreva o seu código aqui :-)
